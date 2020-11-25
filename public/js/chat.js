@@ -107,10 +107,6 @@ $sendLocationButton.addEventListener("click",()=>{
     });
 })
 
-socket.on("roomData",({room,users})=>{
-    console.log(room);
-    console.log(users);
-})
 
 
 socket.emit("join",{username,room},(error)=>{

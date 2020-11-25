@@ -25,12 +25,6 @@ app.use(express.static(publicDirectory));
 let count=0;
 
 io.on("connection",(socket)=>{
-    //console.log("new websocket connection");
-    /*socket.emit("countUpdated",count);
-    socket.on("increment",()=>{
-        count++;
-        io.emit("countUpdated",count);
-    })*/
     socket.on("join",(options,callback)=>{
         const {user,error}=addUser({id:socket.id,...options})
         if(error){
@@ -55,9 +49,10 @@ io.on("connection",(socket)=>{
         callback();
     })
     socket.on("disconnect",()=>{
+        console.log(socket.id);
         const user=removeUser(socket.id);
         if(user){
-            io.to(user.room).emit("message",generateMessage(user.username,`${user.username} has left`));
+            io.to(user.room).emit("message",generateMessage("admin",`${user.username} has left`));
             io.to(user.room).emit("roomData",{
                 room:user.room,
                 users:getUsersInRoom(user.room)

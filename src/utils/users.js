@@ -19,13 +19,16 @@ const addUser=({id,username,room})=>{
         id,username,room
     }
     users.push(user);
+    console.log(users);
     return {user};
 }
 
 
 const removeUser=(id)=>{
-    const index=users.find((user)=>user.id===id)
-    return users.splice(index,1)[0];
+    const index=users.findIndex((user)=>user.id===id)
+    if (index !== -1) {
+        return users.splice(index, 1)[0]
+    }
 }
 
 const getUser=(id)=>{
@@ -33,11 +36,6 @@ const getUser=(id)=>{
 }
 
 const getUsersInRoom=(room)=>{
-    if(!room){
-        return{
-            error:"room are required"
-        }
-    }
     room=room.trim().toLowerCase();
     return users.filter((user)=>user.room===room)
 }
